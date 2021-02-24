@@ -27,21 +27,21 @@ let sendTemplate = ejs.compile(fs.readFileSync(path.resolve(process.cwd(), 'temp
 
 // 提醒站长
 exports.notice = (comment) => {
-
+    fetch('https://qmsg.zendee.cn/send/45dc28a14f7b9b420f4f3ae1310b098e?msg='+comment.get('comment'));
     // 站长自己发的评论不需要通知
     if (comment.get('mail') === process.env.TO_EMAIL 
         || comment.get('mail') === process.env.SMTP_USER) {
         return;
     }
 
-    let emailSubject = '👉 咚！「' + process.env.SITE_NAME + '」上有新评论了';
+    let emailSubject = '叮咚！「' + process.env.SITE_NAME + '」上有新评论了！';
     let emailContent =  noticeTemplate({
-                            siteName: process.env.SITE_NAME,
-                            siteUrl: process.env.SITE_URL,
-                            name: comment.get('nick'),
-                            text: comment.get('comment'),
-                            url: process.env.SITE_URL + comment.get('url')
-                        });
+        siteName: process.env.SITE_NAME,
+        siteUrl: process.env.SITE_URL,
+        name: comment.get('nick'),
+        text: comment.get('comment'),
+        url: process.env.SITE_URL + comment.get('url')
+    });
 
     let mailOptions = {
         from: '"' + process.env.SENDER_NAME + '" <' + process.env.SMTP_USER + '>',
