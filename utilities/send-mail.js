@@ -27,7 +27,9 @@ let sendTemplate = ejs.compile(fs.readFileSync(path.resolve(process.cwd(), 'temp
 
 // 提醒站长
 exports.notice = (comment) => {
-    fetch('https://qmsg.zendee.cn/send/45dc28a14f7b9b420f4f3ae1310b098e?msg='+comment.get('comment'));
+    // QQ提醒
+    process.env.QQ_NOTIFY_KEY ? fetch('https://qmsg.zendee.cn/send/'+process.env.QQ_NOTIFY_KEY+'?msg='+comment.get('comment')) : false;
+    
     // 站长自己发的评论不需要通知
     if (comment.get('mail') === process.env.TO_EMAIL 
         || comment.get('mail') === process.env.SMTP_USER) {
