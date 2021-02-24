@@ -29,7 +29,7 @@ let sendTemplate = ejs.compile(fs.readFileSync(path.resolve(process.cwd(), 'temp
 exports.notice = (comment) => {
     // QQ提醒
     //if (process.env.QQ_NOTIFY_KEY) {
-        fetch('https://qmsg.zendee.cn/send/'+process.env.QQ_NOTIFY_KEY+'?msg='+comment.get('comment'))
+        //fetch('https://qmsg.zendee.cn/send/'+process.env.QQ_NOTIFY_KEY+'?msg='+comment.get('comment'))
     //}
     // 站长自己发的评论不需要通知
     if (comment.get('mail') === process.env.TO_EMAIL 
